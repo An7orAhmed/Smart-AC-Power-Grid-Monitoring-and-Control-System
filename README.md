@@ -1,72 +1,50 @@
-# Power Grid Monitoring & Control System  
+# Power Grid Monitoring and Control System
 
-## Description  
-This project implements a power grid monitoring and control system using microcontrollers (PIC16C72) to measure AC voltage and frequency. It features an LCD interface for real-time parameter display, relay-based load management, and a test mode for manual adjustments. The system validates grid stability by ensuring voltage (215–230V) and frequency (50–55Hz) ranges, with automatic shutdown via relay during deviations. Includes C/Proton Basic code for ADC sampling, frequency counting, and user input handling.  
+## Project Description  
+A microcontroller-based system for monitoring AC power line parameters and implementing safety controls. The system measures voltage/frequency in real-time through analog inputs, displays data on a 16x2 LCD, and activates protective relays when values exceed safe thresholds (215-230V, 50-55Hz). Includes a test mode for simulating grid conditions through hardware controls.
 
-## Key Features  
-- Real-time AC voltage measurement via ADC  
-- Frequency detection using Timer0 counter  
-- Test mode with manual voltage/frequency override  
-- LCD display for parameters (FREQUENCY, RMS VOLTAGE)  
-- Relay control based on safety thresholds  
-- Button interface for adjustments (increment/decrement)  
+## Key Features
+- ▪️ Real-time AC voltage measurement (0-230V range)
+- ▪️ Frequency monitoring (45-60Hz range)
+- ▪️ 4-button interface for test mode parameters
+- ▪️ Relay control logic for power cutoff
+- ▪️ LCD display of RMS voltage and frequency
+- ▪️ Diagnostic test mode with manual override
 
-## Pin Configuration  
-**LCD Interface (PORTB):**  
-- `RB2`: LCD_RS  
-- `RB3`: LCD_EN  
-- `RB4–RB7`: LCD Data Pins (D4–D7)  
+## Hardware Configuration (PIC16C72)
+### Pin Assignments
+| Component       | Connection    |
+|-----------------|---------------|
+| LCD RS          | PORTB.2       |
+| LCD EN          | PORTB.3       |
+| LCD D4-D7       | PORTB.4-7     |
+| Control Relay   | PORTB.0       |
+| Test Mode Button| PORTC.0       |
+| Voltage+ Button | PORTC.1       |
+| Voltage- Button | PORTC.2       |
+| Freq+ Button    | PORTC.3       |
+| Freq- Button    | PORTC.4       |
+| ADC Input       | PORTA.4       |
 
-**Control Pins (PORTC):**  
-- `RC.0`: Test Mode Toggle  
-- `RC.1`: Voltage Increment  
-- `RC.2`: Voltage Decrement  
-- `RC.3`: Frequency Increment  
-- `RC.4`: Frequency Decrement  
-- `Relay Output`: PORTB.0  
+## Usage Modes
+**Normal Operation**  
+- Displays live grid frequency and RMS voltage
+- Activates relay when both parameters stay within safe range
 
-**Analog Input:**  
-- `RA4`: AC Voltage Sensor (ADC Channel 4)  
+**Test Mode**  
+1. Press TEST button (PORTC.0) to activate
+2. Use buttons to simulate voltages (PORTC.1/PORTC.2)
+3. Adjust frequency values (PORTC.3/PORTC.4)
+4. System validates simulated conditions against safety thresholds
 
-## Resources  
-- Pinout Diagram: `/docs/pinmap.pdf`  
-- Schematic: `/docs/power_grid_schematic.pdf`  
+## Resources
+- `src/power_grid.c` - Main control logic (mikroC PRO)
+- `src/power_grid.bas` - Proton Basic implementation  
+- `docs/pinmap.pdf` - Hardware connection diagram
+- `docs/schematic.pdf` - Circuit schematic
 
-## Code Structure  
-1. **Initialization:**  
-   - Configures ADC for voltage sampling.  
-   - Sets Timer0 for frequency measurement.  
-   - Initializes LCD and I/O ports.  
-
-2. **Main Loop:**  
-   - Updates voltage reading using 1000-sample averaging.  
-   - Measures frequency via Timer0 pulses over 1-second intervals.  
-   - Monitors buttons for test mode activation and parameter adjustments.  
-
-3. **Safety Logic:**  
-   ```c  
-   // Relay control snippet (Proton Basic)  
-   If t_volt >= 215 And t_volt <= 230 Then  
-     If t_freq >= 50 And t_freq <= 55 Then  
-       relay = 1  
-     Else  
-       relay = 0  
-     EndIf  
-   Else  
-     relay = 0  
-   EndIf  
-   ```  
-
-## Installation  
-1. Compile `power_grid.c` using MikroC for PIC.  
-2. Flash `power_grid.bas` via Proton IDE to PIC16C72.  
-3. Connect hardware per pinmap and schematic.  
-
-## Usage Overview  
-1. **Normal Mode:** Displays live grid voltage/frequency.  
-2. **Test Mode:**  
-   - Press `RC.0` to enable manual voltage/frequency adjustment.  
-   - Use `RC.1–RC.4` to modify parameters.  
-   - System validates adjusted values before enabling the relay.  
-
-> Note: Requires 20MHz crystal and 5V supply.
+## Dependencies
+- mikroC PRO for PIC (C implementation)
+- Proton IDE (Basic implementation)
+- PIC16C72 microcontroller
+- HD44780-compatible LCD module
