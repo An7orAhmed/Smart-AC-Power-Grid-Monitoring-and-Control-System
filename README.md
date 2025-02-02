@@ -67,10 +67,6 @@ git clone https://github.com/your-username/21-power-grid-system.git
 ## 📄 License
 MIT License - Free for educational and non-commercial use
 
-## ✏️ Credits
-**Authored by:** Engr. Mithun K. Das  
-**Contact:** [mithun060@gmail.com](mailto:mithun060@gmail.com)
-
 ## ⚠️ Disclaimer
 ❗ Use caution when working with AC mains voltages.  
 ❗ Ensure proper isolation before deploying system.  
