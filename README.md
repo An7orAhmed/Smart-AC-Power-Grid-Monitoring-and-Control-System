@@ -1,73 +1,72 @@
-# Smart AC Power Grid Monitoring and Control System
+# Smart AC Power Grid Monitoring & Control System
 
 ![Power Grid System](https://via.placeholder.com/800x400.png?text=Power+Grid+Monitoring+System)
 
-A microcontroller-based solution for real-time AC power parameter analysis and safety control, designed for PIC16F73 devices.
+## Description  
+A microcontroller-based solution for monitoring AC power grid parameters in real-time. This dual-language project (C/Proton Basic) implements voltage/frequency measurement, threshold detection, and automatic load control using relays. Features include LCD display of RMS voltage (0-230V) and frequency (45-60Hz), test mode for parameter simulation, and safety cutoff when values exceed operational limits (215-230V, 50-55Hz).
 
-## 📑 Description
-This system monitors AC voltage and frequency while implementing intelligent safety protocols. It features:
-- **Live power analysis** (RMS voltage, frequency measurement)
-- **Relay safety control** based on voltage (215-230V) and frequency (50-55Hz) thresholds
-- **Interactive test mode** for parameter simulation
-- LCD interface for real-time data visualization
-- Multi-input control interface (buttons for test adjustments)
+## Key Features
+- 📊 Real-time AC voltage sampling (10-bit ADC)
+- ⏱ Frequency measurement via timer counter
+- 🛡 Safety relay control for over/under-voltage/frequency
+- 🔍 Test mode with manual parameter adjustment
+- 🖥 16x2 LCD interface for system status
+- 📈 Digital signal processing (1000-sample averaging)
+- 🔄 Input validation and range checking
 
-Supports C (mikroC compiler) and Proton Basic implementations.
+## Hardware Requirements
+- PIC16C72 microcontroller
+- 20MHz crystal oscillator
+- 16x2 character LCD
+- Voltage divider network (ADC input)
+- Relay module (220V/10A)
+- Tactile switches for test mode
+- Current-limiting resistors
 
-## 🛠 Key Features
-- 🔌 Real-time AC voltage monitoring (0-230V range)
-- 📶 Frequency measurement via TMR0 counter (45-60Hz range)
-- 🧪 Interactive test mode with manual parameter override
-- ⚡ Relay-based protection system
-- 📊 16x2 LCD display interface
-- 🎚️ Input averaging for stable voltage readings (1000-sample ADC filter)
+## Software Dependencies
+- MikroC PRO for PIC (C code)
+- Proton Development Suite (BASIC code) 
+- MPLAB X IDE (optional)
+- PICkit 3 programmer
 
-## 🔧 Hardware Requirements
-| Component          | Specification              |
-|---------------------|---------------------------|
-| MCU                 | PIC16F73                  |
-| Clock               | 20MHz (Proton) / 8MHz (C) |
-| Display             | 4-bit 16x2 LCD            |
-| Voltage Sensing     | Analog Input (RA4)        |
-| User Interface      | 5 Tactile Switches        |
-| Safety Control      | Relay Module (PORTB.0)    |
-
-## 📚 Code Structure
-### `power_grid.c`
-- TMR0 counter-based frequency calculation
-- LCD display drivers for voltage parameters
-- 8MHz clock implementation
-
-### `power_grid.bas`
-- Test mode flag system (`test_flag`)
-- Parameter adjustment logic with boundary checks
-- Multi-condition relay control algorithm
-- 20MHz clock implementation
-
-## ⚙️ Installation
+## Installation
 ```bash
-git clone https://github.com/your-username/21-power-grid-system.git
+git clone https://github.com/yourusername/power-grid-system.git
+cd power-grid-system
+# Compile using MikroC for C version 
+# or Proton IDE for BASIC version
+# Burn hex file to PIC MCU
 ```
-**Prerequisites:**
-- MPLAB X IDE
-- mikroC PRO for PIC (C version)
-- Proton IDE (Basic version)
-- PICkit 3/4 programmer
 
-## 🖥️ Usage
-1. Upload firmware to PIC16F73
-2. LCD shows real-time parameters:
-   ```
-   FREQUENCY: 50Hz
-   AC Volt: 230v
-   ```
-3. Press TEST button to enter simulation mode
-4. Use [AC▲/▼] and [FREQ▲/▼] buttons to modify values
+## Code Structure
+| File               | Purpose                                   |
+|--------------------|-------------------------------------------|
+| `power_grid.c`     | Frequency measurement core logic         |
+| `power_grid.bas`   | Voltage monitoring + relay control system|
+| `LCD_config.inc`   | Display interface configuration          |
+| `device_config.ini`| MCU fuse settings                         |
 
-## 📄 License
-MIT License - Free for educational and non-commercial use
+## Usage
+1. Connect AC source to ADC channel 4
+2. System auto-calibrates with 75V offset
+3. Normal Mode: Displays live measurements
+4. Test Mode (TRIGGER):  
+   - Adjust simulated values with INC/DEC pins
+   - Validate relay triggering thresholds
+   - Exit with TRIGGER button
 
-## ⚠️ Disclaimer
-❗ Use caution when working with AC mains voltages.  
-❗ Ensure proper isolation before deploying system.  
-❗ Not recommended for production use without hardware validation.
+![Operation Flowchart](https://via.placeholder.com/400x200.png?text=System+Flowchart)
+
+## Contributing
+Contributions welcome! Please adhere to:
+- PIC coding standards for embedded systems
+- 1000-sample moving average implementation
+- Hardware abstraction layer principles
+
+## License
+GPL-3.0 © 2023 Power Grid Solutions Team
+
+---
+
+> **Warning**  
+> Requires proper electrical isolation when working with mains voltage. Use optocouplers for ADC inputs.
