@@ -1,0 +1,6 @@
+16C72,729,45,20
+Reminder! Line [7]	In file [C:\Users\antor\Google Drive\Embedded Projects\Tanvir Bhai\Projects\21.Power Grid System\Firmware PG\power grid.bas]	*** Ensure that all fuses are placed in the Config list, as devices have differing default settings! ***
+Reminder! Line [76]	In file [C:\Users\antor\Google Drive\Embedded Projects\Tanvir Bhai\Projects\21.Power Grid System\Firmware PG\power grid.bas]	*** Sign comparison on an unsigned variable. Two's complement values will be operated on! ***
+Reminder! Line [77]	In file [C:\Users\antor\Google Drive\Embedded Projects\Tanvir Bhai\Projects\21.Power Grid System\Firmware PG\power grid.bas]	*** Sign comparison on an unsigned variable. Two's complement values will be operated on! ***
+	PROGRAM COMPILED OK. 729 Words used from a possible 2048
+	45 Variables used in the 16C72 from a possible 128
