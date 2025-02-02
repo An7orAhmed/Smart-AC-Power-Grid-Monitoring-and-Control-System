@@ -1,65 +1,68 @@
-# IntelliGrid: AC Power Monitor & Relay Control
+# Smart AC Power Grid Monitoring & Control System
+
+![Power Grid System](https://via.placeholder.com/800x400?text=Power+Grid+Monitoring+System) <!-- Add real image if available -->
 
 ## Description  
-A PIC microcontroller-based system for monitoring AC power grid parameters and automated relay control. This project enables real-time measurement of voltage (RMS), frequency, and power factor while implementing safety thresholds to activate/deactivate grid-connected devices. Features an LCD interface for live data display and a test mode for parameter simulation.  
+A microcontroller-based solution for real-time AC power grid parameter monitoring and automated control. This system measures voltage/frequency using PIC16F73 (C) and PIC16C72 (Proton Basic) microcontrollers, featuring:
+- Real-time AC voltage RMS calculation
+- Frequency measurement via timer/counter
+- Interactive LCD display for parameters
+- Relay control logic for safe operating ranges (215-230V, 50-55Hz)
+- Manual test mode for parameter simulation
 
-Developed in **C** (for PIC16F73) and **Proton Basic** (for PIC16C72), this firmware demonstrates embedded control techniques for power systems, including:  
-- AC voltage sensing via ADC  
-- Frequency measurement using TMR0 counter  
-- RMS calculation and relaylogic for undervoltage/overfrequency protection  
-- Interactive test mode for threshold simulation  
+## Features
+- 📊 Dual implementation in C (PIC16F73) and Proton Basic (PIC16C72)
+- 🔄 Cross-frequency measurement (50-55Hz range)
+- ⚡ Automatic relay tripping for out-of-spec conditions
+- 🛠️ Test mode with manual voltage/frequency adjustment
+- 📟 Character LCD interface for system status
+- 🔋 Efficient analog input handling (10-bit ADC)
 
-Designed for engineers, educators, and electronics enthusiasts working on smart grid applications.
+## Code Structure
+```
+Power-Grid-System/
+├── power_grid.c          # PIC16F73 implementation (C)
+├── power_grid.bas        # PIC16C72 implementation (Proton Basic)
+├── includes/             # Peripheral libraries
+└── hex_files/            # Compiled binaries
+```
 
-## Key Features  
-🔌 **Voltage & Frequency Measurement**  
-- AC input: 0-230V range (RMS calculation with analog averaging)  
-- Frequency detection: 45-60Hz via pulse counting  
+## Hardware Requirements
+- PIC16F73/PIC16C72 MCU
+- 16x2 Character LCD
+- Analog voltage sensor (AC input)
+- Electromechanical relay module
+- 8MHz/20MHz crystal oscillator
+- Pushbuttons for test mode interface
 
-🛡️ **Safety Relay Control**  
-- Activates relay only when voltage (215-230V) and frequency (50-55Hz) are within safe limits  
+## Installation & Usage
+1. **Compilation**  
+   - C Code: Use MikroC Compiler for PIC
+   - Proton Basic: Use Proton IDE
 
-📟 **LCD Interface**  
-- Displays real-time voltage, frequency, and test mode status  
-
-🔧 **Test Mode**  
-- Simulate voltage/frequency parameters using tactile buttons  
-- Bypass real-world measurements for system validation  
-
-## Hardware Setup  
-**Components**  
-- PIC16F73/PIC16C72 MCU  
-- 16x2 LCD (HD44780-compatible)  
-- Voltage sensor (resistive divider + ADC)  
-- Tactile buttons for test mode  
-- Relay module (5V/230V rating)  
-- 8/20MHz crystal oscillator  
-
-**Software**  
-- MPLAB X + XC8 Compiler (for C code)  
-- Proton IDE (for Proton Basic)  
-- `LiquidCrystal` library for LCD  
-
-## Usage  
-1. **Programming**:  
-   - Compile `power_grid.c` (PIC16F73) or `power_grid.bas` (PIC16C72)  
-   - Burn hex file to MCU using PIC programmer  
-
-2. **Runtime Operation**:  
+2. **Flashing**  
    ```bash
-   LCD Startup ➔ Live Monitoring Mode:
-   FREQUENCY: 50Hz   AC Volt: 220v  
-   -------------------------------
-   # Enter Test Mode (Hold TEST button):  
-   - Adjust simulated voltage/freq with [▲][▼] buttons  
-   - Relay status updates based on custom thresholds  
+   picpgm -p PIC16F73 -c power_grid.hex
    ```
 
-## Notes  
-- ⚠️ **High Voltage Warning**: Isolate monitoring circuit from AC mains using optocouplers  
-- Config bits (Proton Basic) set via Fuse Configurator plugin  
-- C firmware uses `mikroC PRO for PIC` LCD library  
+3. **Operation Modes**  
+   - **Normal Mode**: Displays live measurements  
+   - **Test Mode** (trigger via RC0):  
+     - Adjust simulated values with RC1-RC4  
+     - Observe relay logic response  
 
-![Block Diagram](https://via.placeholder.com/600x200.png?text=Power+Grid+System+Architecture)  
+## Dependencies
+- [MikroC PRO for PIC](https://www.mikroe.com/mikroc-pic)
+- [Proton Development Suite](https://www.crownhill.co.uk/proton.php)
+- PICkit 3/4 Programmer
 
-*Disclaimer: Demo code – validate calibration for production use.*
+## Contributors
+- **Engr. Mithun K. Das** ([mithun060@gmail.com](mailto:mithun060@gmail.com))  
+- Open to community contributions
+
+## License  
+Contact original author for licensing details. Private/commercial use requires permission.
+
+---
+
+*Ensure proper electrical isolation when interfacing with AC mains. Follow IEC 61010 safety standards.*
