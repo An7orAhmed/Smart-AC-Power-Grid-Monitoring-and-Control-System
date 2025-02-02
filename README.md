@@ -1,74 +1,61 @@
-# Smart Grid Monitoring & Control System  
+# Smart AC Grid Monitor & Controller (21. Power Grid System)
 
-![Power Grid](https://via.placeholder.com/800x400.png?text=Power+Grid+System+Diagram)  
+## Description  
+A microcontroller-based system for monitoring and controlling AC power grid parameters in real time. This project uses a **PIC16C72 microcontroller** to measure voltage (via ADC) and frequency (via timer-counter), displays results on an LCD, and automatically triggers a relay when grid conditions exceed safe thresholds (215-230V, 50-55Hz). Includes test mode for manual parameter simulation using tactile switches.
 
-## 📖 Project Description  
-An embedded system solution for real-time AC power grid monitoring and stabilization. This hybrid C/Proton BASIC implementation features voltage/frequency measurement, automated load control, and LCD interface for power parameters visualization. The system ensures grid stability through relay control when parameters exceed safe thresholds (215-230V, 50-55Hz).  
+## Features  
+- Real-time AC voltage monitoring (0-230V range)  
+- Frequency measurement (0-55Hz range via TMR0 counter)  
+- 16x2 LCD interface for parameter visualization  
+- Relay-based load control during voltage/frequency deviations  
+- Test mode with manual adjustment buttons  
+- Voltage averaging algorithm for stable readings  
 
-Key Features:  
-⚡ Real-time AC voltage RMS measurement  
-🔋 Frequency calculation via TMR0 counter  
-🔌 Automatic relay control for load management  
-🧪 Test mode for parameter simulation  
-📟 16x2 LCD interface for system metrics  
-
-## 🛠 Hardware Setup  
-**Required Components**  
-- PIC16C72 Microcontroller  
+## Hardware Requirements  
+- PIC16C72 microcontroller  
 - 16x2 Character LCD  
-- Electromagnetic Relay Module  
-- Push Buttons (Frequency/Voltage Control)  
-- AC Voltage Sensor  
-- ADC Module (MCP3008 recommended)  
+- Relay module (5V compatible)  
+- Voltage sensing circuit (AC step-down + rectifier)  
+- Tactile switches for test mode control  
+- Frequency input via TMR0 pin  
 
-## 💻 Software Requirements  
-- MikroC PRO for PIC (LCD/ADC libraries)  
-- Proton IDE BASIC Compiler  
-- PICKit2 Programmer  
-
-## 📂 Code Structure  
+## Code Structure
 ```bash
-21-Power-Grid-System/
-├── power_grid.c        # Main C implementation (Frequency counter/LCD)
-├── power_grid.bas      # Proton BASIC logic (Voltage control/Relay logic)
-└── includes/           # Device configuration headers
+├── power_grid.c         # Main C implementation (MikroC compatible)
+├── power_grid.bas       # Proton Basic alternative version
+├── LCD_utils/           # LCD driver configuration
+└── Hardware_Abstraction # Pin mappings & peripheral config
 ```
 
-### 🔍 Key Code Components  
-**C Implementation (`power_grid.c`)**  
-- TMR0-based frequency measurement (50Hz-60Hz range)  
-- Custom 7-segment style LCD display routines  
-- Analog voltage reading preprocessing  
+## Installation  
+1. Compile `power_grid.c` using MikroC for PIC  
+2. For Proton Basic version:  
+   ```basic
+   ; Compile with Proton IDE
+   Device = 16C72
+   Xtal 20
+   ```
+3. Burn generated HEX file to PIC16C72  
+4. Connect hardware per pin definitions in code headers  
 
-**BASIC Implementation (`power_grid.bas`)**  
-- Averaged ADC voltage measurement (1000-sample smoothing)  
-- Safety relay control logic  
-- Test mode with manual parameter override  
+## Usage  
+1. **Normal Mode**:  
+   - Displays live frequency (Hz) and voltage (V)  
+   - Relay activates when:  
+     `215V ≤ Voltage ≤ 230V` AND `50Hz ≤ Frequency ≤ 55Hz`  
 
-## 🚀 Usage  
-1. **Normal Operation**  
-   - Real-time display of grid frequency/voltage  
-   - Automatic relay trip when parameters exceed:  
-     `215V ≤ Voltage ≤ 230V` & `50Hz ≤ Frequency ≤ 55Hz`  
+2. **Test Mode**:  
+   - Press TEST button to enable  
+   - Use buttons to simulate parameters:  
+     - AC_INC/AC_DEC: Adjust voltage  
+     - FREQ_INC/FREQ_DEC: Adjust frequency  
 
-2. **Test Mode**  
-   - Force parameters with tactile switches:  
-     - PORTB.1: Voltage+  | PORTB.2: Voltage-  
-     - PORTB.3: Freq+     | PORTB.4: Freq-  
+## Notes  
+⚠️ Requires voltage isolation circuitry for real-world AC monitoring  
+⚠️ Test mode parameters reset to actual values when disabled  
 
-## 🔌 Example Wiring  
-| Component  | MCU Pin  | Connection   |
-|------------|----------|--------------|
-| LCD RS     | RB2      | → LCD.4      |
-| Relay      | RB0      | → NC Contact |
-| Voltage IN | RA4      | → ADC Input  |
-| Test Button| RC0      | → GND        |
-
-## 📄 License  
-MIT License - See [LICENSE](LICENSE) for details  
-
-## 🤝 Contributing  
-Bug reports and feature requests welcome! Please open an issue first to discuss proposed changes.  
+## License  
+MIT License (see `LICENSE` file for details)  
 
 ---  
-*Created with ❤️ for sustainable energy solutions* 🔋💡
+*Developed for embedded power system applications. Includes fail-safe relay control logic to prevent equipment damage during grid anomalies.*
