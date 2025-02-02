@@ -1,8 +1,3 @@
-/*******************************************************************************
-Program for Power Factor measurement
-MCU: PIC16F73  X-Tal: 8MHz
-Program Written By Engr. Mithun K. Das; Email: mithun060@gmail.com
-*******************************************************************************/
 unsigned char ch;
 unsigned int adc_rd0;
 unsigned int temp0=0,temp1=0;
